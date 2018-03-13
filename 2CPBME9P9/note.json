@@ -36,9 +36,9 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "%spark\nprint test",
+      "text": "%spark\nprint(\"test\")",
       "user": "anonymous",
-      "dateUpdated": "Mar 7, 2018 6:33:37 PM",
+      "dateUpdated": "Mar 13, 2018 9:33:36 AM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -54,11 +54,11 @@
         "forms": {}
       },
       "results": {
-        "code": "ERROR",
+        "code": "SUCCESS",
         "msg": [
           {
             "type": "TEXT",
-            "data": "java.lang.NullPointerException\r\n\tat org.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:38)\r\n\tat org.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:33)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.createSparkContext_2(SparkInterpreter.java:391)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.createSparkContext(SparkInterpreter.java:380)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.getSparkContext(SparkInterpreter.java:146)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.open(SparkInterpreter.java:828)\r\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.open(LazyOpenInterpreter.java:70)\r\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:491)\r\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:175)\r\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\r\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\r\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\r\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\r\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\r\n\tat java.lang.Thread.run(Thread.java:745)\r\n"
+            "data": "test"
           }
         ]
       },
@@ -66,9 +66,9 @@
       "jobName": "paragraph_1520443997665_-694817073",
       "id": "20180307-183317_1683489978",
       "dateCreated": "Mar 7, 2018 6:33:17 PM",
-      "dateStarted": "Mar 7, 2018 6:33:37 PM",
-      "dateFinished": "Mar 7, 2018 6:33:40 PM",
-      "status": "ERROR",
+      "dateStarted": "Mar 13, 2018 9:33:36 AM",
+      "dateFinished": "Mar 13, 2018 9:33:37 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
