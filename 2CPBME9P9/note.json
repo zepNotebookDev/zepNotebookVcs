@@ -1,0 +1,492 @@
+{
+  "paragraphs": [
+    {
+      "text": "%dep\n//z.load(\"C:/Users/ctisch/Downloads/postgresql-42.1.3.jar\")\n//z.load(\"C:/Users/ctisch/Downloads/postgresql-9.4.1212.jar\")\nz.load(\"C:/Users/ctisch/Downloads/postgresql-9.3-1103.jdbc3.jar\")\n//z.load(\"C:/Users/ctisch/Downloads/mysql-connector-java-5.1.42-bin.jar\")",
+      "user": "anonymous",
+      "dateUpdated": "Feb 27, 2018 2:47:34 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: org.apache.zeppelin.dep.Dependency \u003d org.apache.zeppelin.dep.Dependency@3ed4ef7f\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499240474796_-912887541",
+      "id": "20170705-094114_33388064",
+      "dateCreated": "Jul 5, 2017 9:41:14 AM",
+      "dateStarted": "Aug 30, 2017 4:20:43 PM",
+      "dateFinished": "Aug 30, 2017 4:21:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nprint test",
+      "user": "anonymous",
+      "dateUpdated": "Mar 7, 2018 6:33:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "java.lang.NullPointerException\r\n\tat org.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:38)\r\n\tat org.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:33)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.createSparkContext_2(SparkInterpreter.java:391)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.createSparkContext(SparkInterpreter.java:380)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.getSparkContext(SparkInterpreter.java:146)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.open(SparkInterpreter.java:828)\r\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.open(LazyOpenInterpreter.java:70)\r\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:491)\r\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:175)\r\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\r\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\r\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\r\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\r\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\r\n\tat java.lang.Thread.run(Thread.java:745)\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1520443997665_-694817073",
+      "id": "20180307-183317_1683489978",
+      "dateCreated": "Mar 7, 2018 6:33:17 PM",
+      "dateStarted": "Mar 7, 2018 6:33:37 PM",
+      "dateFinished": "Mar 7, 2018 6:33:40 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.commons.io.IOUtils\nimport java.net.URL\nimport java.nio.charset.Charset\n\n// Zeppelin creates and injects sc (SparkContext) and sqlContext (HiveContext or SqlContext)\n// So you don\u0027t need create them manually\n\n// load bank data\nval bankText \u003d sc.parallelize(\n    IOUtils.toString(\n        new URL(\"https://s3.amazonaws.com/apache-zeppelin/tutorial/bank/bank.csv\"),\n        Charset.forName(\"utf8\")).split(\"\\n\"))\n\ncase class Bank(age: Integer, job: String, marital: String, education: String, balance: Integer)\n\nval bank \u003d bankText.map(s \u003d\u003e s.split(\";\")).filter(s \u003d\u003e s(0) !\u003d \"\\\"age\\\"\").map(\n    s \u003d\u003e Bank(s(0).toInt, \n            s(1).replaceAll(\"\\\"\", \"\"),\n            s(2).replaceAll(\"\\\"\", \"\"),\n            s(3).replaceAll(\"\\\"\", \"\"),\n            s(5).replaceAll(\"\\\"\", \"\").toInt\n        )\n).toDF()\nbank.registerTempTable(\"bank\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 7, 2018 6:31:34 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "java.lang.NullPointerException\r\n\tat org.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:38)\r\n\tat org.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:33)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.createSparkContext_2(SparkInterpreter.java:391)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.createSparkContext(SparkInterpreter.java:380)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.getSparkContext(SparkInterpreter.java:146)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.open(SparkInterpreter.java:828)\r\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.open(LazyOpenInterpreter.java:70)\r\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:491)\r\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:175)\r\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\r\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\r\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\r\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\r\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\r\n\tat java.lang.Thread.run(Thread.java:745)\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499240487262_1850009635",
+      "id": "20170705-094127_80404089",
+      "dateCreated": "Jul 5, 2017 9:41:27 AM",
+      "dateStarted": "Mar 7, 2018 6:31:34 PM",
+      "dateFinished": "Mar 7, 2018 6:31:39 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sqlContext.sql(\"\"\"SELECT * FROM bank\"\"\").show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 7, 2018 5:58:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "java.lang.NullPointerException\r\n\tat org.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:38)\r\n\tat org.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:33)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.createSparkContext_2(SparkInterpreter.java:391)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.createSparkContext(SparkInterpreter.java:380)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.getSparkContext(SparkInterpreter.java:146)\r\n\tat org.apache.zeppelin.spark.SparkInterpreter.open(SparkInterpreter.java:828)\r\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.open(LazyOpenInterpreter.java:70)\r\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:491)\r\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:175)\r\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\r\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\r\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\r\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\r\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\r\n\tat java.lang.Thread.run(Thread.java:745)\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499240631097_1410423888",
+      "id": "20170705-094351_2128763141",
+      "dateCreated": "Jul 5, 2017 9:43:51 AM",
+      "dateStarted": "Mar 7, 2018 5:58:35 PM",
+      "dateFinished": "Mar 7, 2018 5:58:49 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "bank.write.parquet(\"C:/dev/Zeppelin/zeppelin-0.7.2-bin-all/zeppelin-0.7.2-bin-all/test/bank.parquet\")  ",
+      "user": "anonymous",
+      "dateUpdated": "Aug 25, 2017 10:23:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\norg.apache.spark.sql.AnalysisException: path file:/C:/dev/Zeppelin/zeppelin-0.7.2-bin-all/zeppelin-0.7.2-bin-all/test/bank.parquet already exists.;\r\n  at org.apache.spark.sql.execution.datasources.InsertIntoHadoopFsRelationCommand.run(InsertIntoHadoopFsRelationCommand.scala:80)\r\n  at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult$lzycompute(commands.scala:58)\r\n  at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult(commands.scala:56)\r\n  at org.apache.spark.sql.execution.command.ExecutedCommandExec.doExecute(commands.scala:74)\r\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:114)\r\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:114)\r\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:135)\r\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\r\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:132)\r\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:113)\r\n  at org.apache.spark.sql.execution.QueryExecution.toRdd$lzycompute(QueryExecution.scala:87)\r\n  at org.apache.spark.sql.execution.QueryExecution.toRdd(QueryExecution.scala:87)\r\n  at org.apache.spark.sql.execution.datasources.DataSource.write(DataSource.scala:492)\r\n  at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:215)\r\n  at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:198)\r\n  at org.apache.spark.sql.DataFrameWriter.parquet(DataFrameWriter.scala:494)\r\n  ... 46 elided\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499240674520_-2043989655",
+      "id": "20170705-094434_312003074",
+      "dateCreated": "Jul 5, 2017 9:44:34 AM",
+      "dateStarted": "Aug 25, 2017 10:23:59 AM",
+      "dateFinished": "Aug 25, 2017 10:24:01 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val bank2 \u003d sqlContext.read.parquet(\"C:/dev/Zeppelin/zeppelin-0.7.2-bin-all/zeppelin-0.7.2-bin-all/test/bank.parquet\")",
+      "user": "anonymous",
+      "dateUpdated": "Aug 25, 2017 10:24:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nbank2: org.apache.spark.sql.DataFrame \u003d [age: int, job: string ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499241427156_2124639319",
+      "id": "20170705-095707_1644094002",
+      "dateCreated": "Jul 5, 2017 9:57:07 AM",
+      "dateStarted": "Aug 25, 2017 10:24:05 AM",
+      "dateFinished": "Aug 25, 2017 10:24:06 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "bank2.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 5, 2017 10:24:55 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---+-------------+-------+---------+-------+\n|age|          job|marital|education|balance|\n+---+-------------+-------+---------+-------+\n| 30|   unemployed|married|  primary|   1787|\n| 33|     services|married|secondary|   4789|\n| 35|   management| single| tertiary|   1350|\n| 30|   management|married| tertiary|   1476|\n| 59|  blue-collar|married|secondary|      0|\n| 35|   management| single| tertiary|    747|\n| 36|self-employed|married| tertiary|    307|\n| 39|   technician|married|secondary|    147|\n| 41| entrepreneur|married| tertiary|    221|\n| 43|     services|married|  primary|    -88|\n| 39|     services|married|secondary|   9374|\n| 43|       admin.|married|secondary|    264|\n| 36|   technician|married| tertiary|   1109|\n| 20|      student| single|secondary|    502|\n| 31|  blue-collar|married|secondary|    360|\n| 40|   management|married| tertiary|    194|\n| 56|   technician|married|secondary|   4073|\n| 37|       admin.| single| tertiary|   2317|\n| 25|  blue-collar| single|  primary|   -221|\n| 31|     services|married|secondary|    132|\n+---+-------------+-------+---------+-------+\nonly showing top 20 rows\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499241465509_274259265",
+      "id": "20170705-095745_103785918",
+      "dateCreated": "Jul 5, 2017 9:57:45 AM",
+      "dateStarted": "Jul 5, 2017 10:24:55 AM",
+      "dateFinished": "Jul 5, 2017 10:24:56 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var jdbcDF \u003d spark.read\r\n  .format(\"jdbc\")\r\n  .option(\"url\", \"jdbc:postgresql://localhost:5432/testing\")\r\n  .option(\"dbtable\", \"adrcity\")\r\n  .option(\"user\", \"pganalytics\")\r\n  .option(\"password\", \"hellopostgres\")\r\n  .option(\"driver\", \"org.postgresql.Driver\")\r\n  .option(\"fetchsize\", \"10\")\r\n  .load()\r\n\r\njdbcDF.write.parquet(\"C:/dev/Zeppelin/zeppelin-0.7.2-bin-all/zeppelin-0.7.2-bin-all/test/jdbcDF.parquet\") ",
+      "user": "anonymous",
+      "dateUpdated": "Jul 19, 2017 1:14:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\njdbcDF: org.apache.spark.sql.DataFrame \u003d [validfrom: timestamp, validthru: timestamp ... 28 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499241464064_928717144",
+      "id": "20170705-095744_586435431",
+      "dateCreated": "Jul 5, 2017 9:57:44 AM",
+      "dateStarted": "Jul 19, 2017 1:14:42 PM",
+      "dateFinished": "Jul 19, 2017 1:14:44 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "jdbcDF.show",
+      "user": "anonymous",
+      "dateUpdated": "Jul 19, 2017 11:32:03 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+---------+------+-------+---------+----------+----------+------+---------+----------+----------+---------+----------+----------+--------+---------+----------+----------+----------+----------+----------+----------+-----+-----+----------+---------+--------+---------+-----------+-------------+\n|validfrom|validthru|client|country|city_code|commu_code|flag_strts|region|time_zone|taxjurcode|transpzone|def_langu|regiogroup|city_cd_ps|regpolit|temp_area|pr_area_ai|calor_area|gas_prs_ar|pr_area_wa|ha_area_wa|flag_suppl|counc|werks|net_e_node|area_code|mc_city1|mc_street|county_code|township_code|\n+---------+---------+------+-------+---------+----------+----------+------+---------+----------+----------+---------+----------+----------+--------+---------+----------+----------+----------+----------+----------+----------+-----+-----+----------+---------+--------+---------+-----------+-------------+\n+---------+---------+------+-------+---------+----------+----------+------+---------+----------+----------+---------+----------+----------+--------+---------+----------+----------+----------+----------+----------+----------+-----+-----+----------+---------+--------+---------+-----------+-------------+\n\r\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499242475523_1807319999",
+      "id": "20170705-101435_764934848",
+      "dateCreated": "Jul 5, 2017 10:14:35 AM",
+      "dateStarted": "Jul 19, 2017 11:32:03 AM",
+      "dateFinished": "Jul 19, 2017 11:32:04 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nSelect 1",
+      "user": "anonymous",
+      "dateUpdated": "Jul 19, 2017 9:32:06 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "1\n1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1499243481598_576920900",
+      "id": "20170705-103121_1221008866",
+      "dateCreated": "Jul 5, 2017 10:31:21 AM",
+      "dateStarted": "Jul 19, 2017 9:32:06 AM",
+      "dateFinished": "Jul 19, 2017 9:32:52 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 19, 2017 1:04:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\ncom.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure\r\n\r\nThe last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.\r\n  at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)\r\n  at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)\r\n  at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)\r\n  at java.lang.reflect.Constructor.newInstance(Constructor.java:408)\r\n  at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)\r\n  at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:989)\r\n  at com.mysql.jdbc.MysqlIO.readPacket(MysqlIO.java:632)\r\n  at com.mysql.jdbc.MysqlIO.doHandshake(MysqlIO.java:1016)\r\n  at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2194)\r\n  at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2225)\r\n  at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2024)\r\n  at com.mysql.jdbc.ConnectionImpl.\u003cinit\u003e(ConnectionImpl.java:779)\r\n  at com.mysql.jdbc.JDBC4Connection.\u003cinit\u003e(JDBC4Connection.java:47)\r\n  at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)\r\n  at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)\r\n  at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)\r\n  at java.lang.reflect.Constructor.newInstance(Constructor.java:408)\r\n  at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)\r\n  at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:389)\r\n  at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:330)\r\n  at org.apache.spark.sql.execution.datasources.jdbc.DriverWrapper.connect(DriverWrapper.scala:45)\r\n  at org.apache.spark.sql.execution.datasources.jdbc.JdbcUtils$$anonfun$createConnectionFactory$1.apply(JdbcUtils.scala:59)\r\n  at org.apache.spark.sql.execution.datasources.jdbc.JdbcUtils$$anonfun$createConnectionFactory$1.apply(JdbcUtils.scala:50)\r\n  at org.apache.spark.sql.execution.datasources.jdbc.JDBCRDD$.resolveTable(JDBCRDD.scala:58)\r\n  at org.apache.spark.sql.execution.datasources.jdbc.JDBCRelation.\u003cinit\u003e(JDBCRelation.scala:113)\r\n  at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:45)\r\n  at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:330)\r\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:152)\r\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:125)\r\n  ... 46 elided\r\nCaused by: java.net.SocketException: Connection reset\r\n  at java.net.SocketInputStream.read(SocketInputStream.java:189)\r\n  at java.net.SocketInputStream.read(SocketInputStream.java:121)\r\n  at com.mysql.jdbc.util.ReadAheadInputStream.fill(ReadAheadInputStream.java:101)\r\n  at com.mysql.jdbc.util.ReadAheadInputStream.readFromUnderlyingStreamIfNecessary(ReadAheadInputStream.java:144)\r\n  at com.mysql.jdbc.util.ReadAheadInputStream.read(ReadAheadInputStream.java:174)\r\n  at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3008)\r\n  at com.mysql.jdbc.MysqlIO.readPacket(MysqlIO.java:567)\r\n  ... 68 more\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1500449526286_-770033919",
+      "id": "20170719-093206_711861467",
+      "dateCreated": "Jul 19, 2017 9:32:06 AM",
+      "dateStarted": "Jul 19, 2017 1:01:43 PM",
+      "dateFinished": "Jul 19, 2017 1:02:44 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "pgToParquet(\"jdbcTest\")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 19, 2017 2:17:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": "org.apache.thrift.transport.TTransportException: java.net.SocketException: Connection reset",
+      "apps": [],
+      "jobName": "paragraph_1500465702134_1425523464",
+      "id": "20170719-140142_1067004847",
+      "dateCreated": "Jul 19, 2017 2:01:42 PM",
+      "dateStarted": "Jul 19, 2017 2:17:08 PM",
+      "dateFinished": "Jul 19, 2017 2:17:31 PM",
+      "status": "ERROR",
+      "errorMessage": "java.net.SocketException: Connection reset\r\n\tat java.net.SocketInputStream.read(SocketInputStream.java:189)\r\n\tat java.net.SocketInputStream.read(SocketInputStream.java:121)\r\n\tat java.io.BufferedInputStream.fill(BufferedInputStream.java:246)\r\n\tat java.io.BufferedInputStream.read1(BufferedInputStream.java:286)\r\n\tat java.io.BufferedInputStream.read(BufferedInputStream.java:345)\r\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127)\r\n\tat org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)\r\n\tat org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)\r\n\tat org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)\r\n\tat org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)\r\n\tat org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)\r\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.recv_interpret(RemoteInterpreterService.java:266)\r\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:250)\r\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:373)\r\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:97)\r\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:406)\r\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:175)\r\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:329)\r\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\r\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\r\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\r\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\r\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\r\n\tat java.lang.Thread.run(Thread.java:745)\r\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Von postgres zu parquet\r\ndef pgToParquet(tableName : String, exportName : String \u003d null) : Unit \u003d {\r\n    var intExportName \u003d if (exportName \u003d\u003d null) tableName else exportName\r\n    sqlContext.read.format(\"jdbc\").options(Map(\r\n      \"url\" -\u003e s\"jdbc:postgresql://localhost:5432/testing\",\r\n      \"user\" -\u003e \"pganalytics\",\r\n      \"password\" -\u003e \"hellopostgres\",\r\n      \"dbtable\" -\u003e tableName,\r\n      \"driver\" -\u003e \"org.postgresql.Driver\",\r\n      \"fetchSize\" -\u003e \"1000\"\r\n    )).load()\r\n    .write.mode(org.apache.spark.sql.SaveMode.Overwrite).parquet(\"C:/Users/ctisch/Desktop/test/temp_jdbc.parquet\")\r\n    \r\n    sqlContext\r\n        .read.parquet(\"C:/Users/ctisch/Desktop/test/temp_jdbc.parquet\")\r\n        .coalesce(48)\r\n        .write.mode(org.apache.spark.sql.SaveMode.Overwrite).parquet(\"C:/Users/ctisch/Desktop/test/jdbc.parquet\")\r\n\r\n  //  registerTempTable(tableName)\r\n    //deleteParquet(tab(\"temp_\"+intExportName))\r\n}\r\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 19, 2017 2:16:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\npgToParquet: (tableName: String, exportName: String)Unit\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1500461784593_1494385892",
+      "id": "20170719-125624_1911707372",
+      "dateCreated": "Jul 19, 2017 12:56:24 PM",
+      "dateStarted": "Jul 19, 2017 2:16:22 PM",
+      "dateFinished": "Jul 19, 2017 2:16:44 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1500465683263_614042061",
+      "id": "20170719-140123_1931762164",
+      "dateCreated": "Jul 19, 2017 2:01:23 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "test",
+  "id": "2CPBME9P9",
+  "angularObjects": {
+    "2CMX7JFGV:shared_process": [],
+    "2CKXTFB2X:shared_process": [],
+    "2CNU89U7A:shared_process": [],
+    "2CKZHBR12:shared_process": [],
+    "2CP7HPWQJ:shared_process": [],
+    "2CNEZVKUP:shared_process": [],
+    "2CKHF8ZPD:shared_process": [],
+    "2CN6PSDF2:shared_process": [],
+    "2CMX33SNR:shared_process": [],
+    "2CNYWMVRC:shared_process": [],
+    "2CK2FPP2S:shared_process": [],
+    "2CK4AEVM3:shared_process": [],
+    "2CMCQXEZG:shared_process": [],
+    "2CK9RVAAC:shared_process": [],
+    "2CNFX6JCW:shared_process": [],
+    "2CNPDVNAK:shared_process": [],
+    "2CMVU63RA:shared_process": [],
+    "2CP2NG435:shared_process": [],
+    "2CM4XB44Y:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
